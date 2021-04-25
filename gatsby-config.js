@@ -12,7 +12,9 @@ module.exports = {
     keywords: 'example gatsby serverless netlify',
     siteUrl: 'https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net',
     author: {
-      name: 'Pena'
+      name: 'Pena',
+      url: 'https://www.google.com',
+      email: 'test@test.com'
     }
   },
   plugins: [
