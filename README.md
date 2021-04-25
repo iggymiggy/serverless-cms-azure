@@ -6,13 +6,13 @@
  This Gatsby app processes the markdown files stored in src/content into pages. More information on how Gatsby works can be found [here](https://www.gatsbyjs.com/).
 
  The Netlify CMS configuration is stored in static/admin/config.yml. You need to configure the settings at the top of the file to point towards your repo and your function app address - the rest can be left as is unless you want to add more types of data to manage. To find out more about configuring Netlify CMS check out their [site](https://www.netlifycms.org/docs/github-backend/).
- 
+
  This makes the app respond on the /admin/ path with a CMS screen as so:
  ![Splash page asking user to login using GitHub](https://github.com/deepbass/serverless-cms-azure/raw/main/readme-images/serverless-cms-admin-login.PNG)
 
  For this to work, you need to setup the Azure Function in the /oauthfunc folder. What this does is handle letting the CMS verify your account with GitHub by exposing a set of endpoints that implement the OAuth standard. This is why in the static/admin/config.yml file you need to list the address of the function app - it's telling Netlify CMS where to look for its OAuth implementation. For this function to be allowed to implement OAuth and verify GitHub accounts, it needs permission from the repository owner in the form of an OAuth Client Id and Secret. You set this up by visiting this [page](https://github.com/settings/applications/new). Note that you need to enter a callback address which is also on your Function App.
  ![GitHub setup OAuth App](https://github.com/deepbass/serverless-cms-azure/raw/main/readme-images/serverless-cms-github-oauth-app.PNG)
- 
+
  You then need to modify the static/admin/config.yml to replace the base_url with your function app address - otherwise your Netlify CMS will attempt to use my Azure Function for authorization and fail. You also want to replace the 'repo' value with your own, so that it knows to point at your repository not mine.
  ![Netlify CMS config file showing base_url and repo set to my values](https://github.com/deepbass/serverless-cms-azure/raw/main/readme-images/serverless-cms-netlify-config.PNG)
 
@@ -48,4 +48,4 @@
 
  There's also various other features, like uploading images that will get put in the src/content/images folder. Look up the full features of Netlify CMS on its [website](https://www.netlifycms.org/)
 
- You're all ready to go. Please do visit the example site [here](https://serverlesscms.danielbass.dev) and feel free to drop any issues on this repo or email me@danielbass.dev
+ You're all ready to go. Please do visit the example site [here](https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net) and feel free to drop any issues on this repo or email me@danielbass.dev

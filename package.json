@@ -3,7 +3,7 @@
   "description": " Full implementation of a Serverless CMS on Azure, using Netlify CMS, Gatsby and Azure Functions. Built and Deployed using GitHub Actions",
   "version": "1.0.0",
   "private": true,
-  "author": "Daniel Bass <me@danielbass.dev>",
+  "author": "Pena",
   "keywords": [
     "gatsby"
   ],

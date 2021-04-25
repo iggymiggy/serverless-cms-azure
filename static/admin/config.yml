@@ -1,8 +1,8 @@
 backend:
   name: github
   branch: main
-  repo: deepbass/serverless-cms-azure
-  base_url:  https://cmsazuredemofunc.azurewebsites.net
+  repo: iggymiggy/serverless-cms-azure
+  base_url:  https://oauthfunctionappname.azurewebsites.net
 
 media_folder: src/content/images/
 public_folder: /images

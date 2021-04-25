@@ -10,11 +10,9 @@ module.exports = {
     title: 'Bob\'s Website',
     description: '',
     keywords: 'example gatsby serverless netlify',
-    siteUrl: 'https://serverlesscms.danielbass.dev',
+    siteUrl: 'https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net',
     author: {
-      name: 'Daniel Bass',
-      url: 'https://www.danielbass.dev',
-      email: 'me@danielbass.dev'
+      name: 'Pena'
     }
   },
   plugins: [
@@ -75,7 +73,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: 'https://serverlesscms.danielbass.dev'
+        siteUrl: 'https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net'
       }
     },
     'gatsby-plugin-typescript',
