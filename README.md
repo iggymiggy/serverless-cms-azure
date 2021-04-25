@@ -48,4 +48,4 @@
 
  There's also various other features, like uploading images that will get put in the src/content/images folder. Look up the full features of Netlify CMS on its [website](https://www.netlifycms.org/)
 
- You're all ready to go. Please do visit the example site [here](https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net) and feel free to drop any issues on this repo or email me@danielbass.dev
+ You're all ready to go. Please do visit the example site [here](https://site64pmuoznmv7fi.z13.web.core.windows.net/) and feel free to drop any issues on this repo or email me@danielbass.dev
