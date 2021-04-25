@@ -84,7 +84,7 @@ jobs:
         with:
           # Specify the script here
           # TODO change location:
-          inlineScript: az group create -n ${{ env.RESOURCE_GROUP_NAME }} --location eastus
+          inlineScript: az group create -n ${{ env.RESOURCE_GROUP_NAME }} --location northeurope
 
       - name: Deploy Azure Resource Manager (ARM) Template
         id: deploy
