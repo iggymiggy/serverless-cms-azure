@@ -13,8 +13,8 @@ on:
 env:
     RESOURCE_GROUP_NAME: noroutine
     STORAGE_ACCOUNT_NAME: site64pmuoznmv7fi
-    OAUTH_FUNCTION_APP_NAME: oauthFunctionAppName
-    ORIGIN: https://site64pmuoznmv7fi.z13.web.core.windows.net/
+    OAUTH_FUNCTION_APP_NAME: noroutine-function-app
+    ORIGIN: https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

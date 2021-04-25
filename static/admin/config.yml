@@ -2,7 +2,7 @@ backend:
   name: github
   branch: main
   repo: iggymiggy/serverless-cms-azure
-  base_url:  https://oauthfunctionappname.azurewebsites.net
+  base_url:  https://noroutine-function-app.azurewebsites.net
 
 media_folder: src/content/images/
 public_folder: /images

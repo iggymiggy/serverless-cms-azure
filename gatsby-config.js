@@ -10,7 +10,7 @@ module.exports = {
     title: 'Bob\'s Website',
     description: '',
     keywords: 'example gatsby serverless netlify',
-    siteUrl: 'https://site64pmuoznmv7fi.z13.web.core.windows.net/',
+    siteUrl: 'https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net',
     author: {
       name: 'Pena',
       url: 'https://www.google.com',
@@ -75,7 +75,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: 'https://site64pmuoznmv7fi.z13.web.core.windows.net/'
+        siteUrl: 'https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net'
       }
     },
     'gatsby-plugin-typescript',
