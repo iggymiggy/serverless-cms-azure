@@ -86,6 +86,7 @@ jobs:
           # TODO change location:
           inlineScript: az group create -n ${{ env.RESOURCE_GROUP_NAME }} --location northeurope
 
+# TODO: move az environnment deployment away from here
       - name: Deploy Azure Resource Manager (ARM) Template
         id: deploy
         uses: Azure/arm-deploy@v1
@@ -101,7 +102,13 @@ jobs:
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
           deploymentMode: Incremental
           # Supply deployment parameter values.
-          parameters: storageAccount_name=${{env.STORAGE_ACCOUNT_NAME}} oauthFunctionAppName=${{ env.OAUTH_FUNCTION_APP_NAME }} oauthClientId=${{ secrets.OAUTH_CLIENT_ID }} oauthClientSecret=${{ secrets.OAUTH_CLIENT_SECRET }} origin=${{ env.ORIGIN }} redirectUrl=https://${{ env.OAUTH_FUNCTION_APP_NAME }}.azurewebsites.net/callback
+          parameters:
+            storageAccount_name=${{env.STORAGE_ACCOUNT_NAME}}
+            oauthFunctionAppName=${{ env.OAUTH_FUNCTION_APP_NAME }}
+            oauthClientId=${{ secrets.OAUTH_CLIENT_ID }}
+            oauthClientSecret=${{ secrets.OAUTH_CLIENT_SECRET }}
+            origin=${{ env.ORIGIN }}
+            redirectUrl=https://${{ env.OAUTH_FUNCTION_APP_NAME }}.azurewebsites.net/callback
 
       - name: Install packages for OAuth Function
         run: |
