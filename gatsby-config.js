@@ -1,91 +1,108 @@
-const netlifyCmsPath = {
-  resolve: `gatsby-plugin-netlify-cms-paths`,
-  options: {
-    cmsConfig: `/static/admin/config.yml`
-  }
-}
+var proxy = require('http-proxy-middleware');
+require('dotenv').config();
 
 module.exports = {
   siteMetadata: {
-    title: 'Bob\'s Website',
-    description: '',
-    keywords: 'example gatsby serverless netlify',
-    siteUrl: 'https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net',
-    author: {
-      name: 'Pena',
-      url: 'https://www.google.com',
-      email: 'test@test.com'
-    }
+    title: 'Gatsby + BigCommerce + Netlify CMS Starter',
+    description:
+      'This repo contains an example ecommerce website that is built with Gatsby, BigCommerce and Netlify CMS. It follows the JAMstack architecture by using Git as a single source of truth for content, BigCommerce for catalog / cart / checkout, and Netlify for continuous deployment.'
   },
   plugins: [
     {
+      resolve: 'gatsby-source-bigcommerce',
+      options: {
+        // REQUIRED
+        clientId: process.env.API_CLIENT_ID,
+        secret: process.env.API_SECRET,
+        accessToken: process.env.API_TOKEN,
+        storeHash: process.env.API_STORE_HASH,
+        endpoints: {
+          BigCommerceProducts: '/catalog/products?include=images,variants,custom_fields,options,modifiers,videos',
+          BigCommerceCategories: '/catalog/categories',
+          BigCommerceBrands: "/catalog/brands"
+        }
+      }
+    },
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sass',
+    {
+      // keep as first gatsby-source-filesystem plugin for gatsby image support
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'content',
-        path: `${__dirname}/src/content`
+        path: `${__dirname}/static/img`,
+        name: 'uploads'
       }
     },
     {
-      resolve: 'gatsby-plugin-mdx',
+      resolve: 'gatsby-source-filesystem',
       options: {
-        extensions: [`.mdx`, `.md`],
-
-        defaultLayouts: {
-          // This entry template will switch the page template based on
-          // a frontmatter value provided in the CMS, allowing users to
-          // choose different template layouts.
-          bloglisting: require.resolve(`./src/templates/bloglisting.tsx`),
-          blogpost: require.resolve(`./src/templates/blogpost.tsx`),
-          page: require.resolve(`./src/templates/page.tsx`),
-          default: require.resolve(`./src/templates/page.tsx`)
-        },
-        gatsbyRemarkPlugins: [
-          netlifyCmsPath,
+        path: `${__dirname}/src/pages`,
+        name: 'pages'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/img`,
+        name: 'images'
+      }
+    },
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: [
           {
-            resolve: 'gatsby-remark-responsive-iframe',
+            resolve: 'gatsby-remark-relative-images',
             options: {
-              wrapperStyle: 'margin-bottom: 1rem'
+              name: 'uploads'
             }
           },
-          'gatsby-remark-copy-linked-files',
-          'gatsby-remark-smartypants',
           {
             resolve: 'gatsby-remark-images',
             options: {
-              maxWidth: 1140,
-              quality: 100,
-              backgroundColor: 'transparent',
-              linkImagesToOriginal: false,
-              withWebp: true,
-              showCaptions: ['title'],
-              wrapperStyle: () => `text-align: center`
+              // It's important to specify the maxWidth (in pixels) of
+              // the content container as this plugin uses this as the
+              // base for generating different widths of each image.
+              maxWidth: 2048
+            }
+          },
+          {
+            resolve: 'gatsby-remark-copy-linked-files',
+            options: {
+              destinationDir: 'static'
             }
           }
         ]
       }
     },
-    'gatsby-transformer-json',
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: 'gatsby-plugin-netlify-cms',
       options: {
-        name: 'data',
-        path: `${__dirname}/src/data`
+        modulePath: `${__dirname}/src/cms/cms.js`
       }
     },
     {
-      resolve: 'gatsby-plugin-canonical-urls',
+      resolve: 'gatsby-plugin-purgecss', // purges all unused/unreferenced css rules
       options: {
-        siteUrl: 'https://cdn-endpoint-site64pmuoznmv7fi.azureedge.net'
+        develop: true, // Activates purging in npm run develop
+        purgeOnly: ['/all.sass'] // applies purging only on the bulma css file
       }
-    },
-    'gatsby-plugin-typescript',
-    'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
-    netlifyCmsPath,
-    'gatsby-plugin-material-ui',
-    'gatsby-plugin-react-helmet',
-    {
-      resolve: `gatsby-plugin-netlify-cms`
-    }
-  ]
-}
+    }, // must be after other CSS plugins
+    'gatsby-plugin-netlify' // make sure to keep it last in the array
+  ],
+  // for avoiding CORS while developing Netlify Functions locally
+  // read more: https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying
+  developMiddleware: app => {
+    app.use(
+      '/.netlify/functions/',
+      proxy({
+        target: 'http://localhost:9000',
+        pathRewrite: {
+          '/.netlify/functions/': ''
+        }
+      })
+    );
+  }
+};
